@@ -1,54 +1,45 @@
-# 🐦 BirdVision
+# 🐦 BirdVision – Bird Species Recognition System
 
-## 🚀 AI Bird Detection System
+BirdVision is an AI-powered bird recognition system built using Python, YOLOv8, and ResNet50.
 
-This is a bird detection system I built using AI.  
-It can detect and identify birds from **images, videos, and live camera feed**.
-
----
-
-### ⚡ Core Idea
-
-- YOLO → finds the bird  
-- ResNet → tells what bird it is  
-
-Also supports:
-- English labels  
-- Sinhala labels  
+It can detect and identify bird species from **images, videos, and live camera feed** with support for both **English** and **Sinhala** labels.
 
 ---
 
-## 🔥 What it can do
+## Features
 
-- Detect birds from images  
-- Process videos frame-by-frame  
-- Run real-time detection using webcam  
-- Show bird name + confidence  
-- Show Sinhala translation  
-
----
-
-## 🧠 How it works (simple)
-
-1. YOLOv8 detects the bird  
-2. Crop detected region  
-3. ResNet50 classifies it  
-4. Draw result on screen  
+- **Image Detection:** Upload an image and identify the bird species.
+- **Video Detection:** Process videos frame by frame.
+- **Live Detection:** Run real-time detection using a webcam or external camera.
+- **Bilingual Output:** Display bird names in English and Sinhala.
+- **Confidence Score:** Show prediction confidence for detected birds.
 
 ---
 
-## 📁 Project Structure
-BirdVision/
+## How It Works
+
+1. **YOLOv8** detects the bird and draws the bounding box.
+2. The detected bird region is cropped.
+3. **ResNet50** classifies the cropped bird image.
+4. The result is displayed with English name, Sinhala name, and confidence score.
+
+---
+
+## Project Structure
+
+```text
+BirdVision_Local/
 │
-├── main.py # image + video detection
-├── live.py # live camera detection
+├── main.py
+├── live.py
+├── requirements.txt
 │
 ├── models/
-│ ├── best.pt
-│ ├── bird_resnet50.pth
-│ ├── classes.json
-│ ├── sinhala_map.json
-│ └── species_info.json
+│   ├── best.pt
+│   ├── bird_resnet50.pth
+│   ├── classes.json
+│   ├── sinhala_map.json
+│   └── species_info.json
 │
 ├── fonts/
-│ └── NotoSansSinhala-Regular.ttf
+│   └── NotoSansSinhala-Regular.ttf
