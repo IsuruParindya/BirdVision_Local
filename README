@@ -2,44 +2,85 @@
 
 BirdVision is an AI-powered bird recognition system built using Python, YOLOv8, and ResNet50.
 
-It can detect and identify bird species from **images, videos, and live camera feed** with support for both **English** and **Sinhala** labels.
+It can detect and identify bird species from images, videos, and live camera feed with support for English and Sinhala labels.
 
 ---
 
 ## Features
 
-- **Image Detection:** Upload an image and identify the bird species.
-- **Video Detection:** Process videos frame by frame.
-- **Live Detection:** Run real-time detection using a webcam or external camera.
-- **Bilingual Output:** Display bird names in English and Sinhala.
-- **Confidence Score:** Show prediction confidence for detected birds.
+- Image detection
+- Video processing
+- Live camera detection
+- English + Sinhala labels
+- Confidence score
 
 ---
 
 ## How It Works
 
-1. **YOLOv8** detects the bird and draws the bounding box.
-2. The detected bird region is cropped.
-3. **ResNet50** classifies the cropped bird image.
-4. The result is displayed with English name, Sinhala name, and confidence score.
+1. YOLO detects the bird
+2. Crop the detected region
+3. ResNet classifies the bird
+4. Display result with name + confidence
 
 ---
 
 ## Project Structure
 
-```text
 BirdVision_Local/
-│
-├── main.py
-├── live.py
-├── requirements.txt
-│
-├── models/
-│   ├── best.pt
-│   ├── bird_resnet50.pth
-│   ├── classes.json
-│   ├── sinhala_map.json
-│   └── species_info.json
-│
-├── fonts/
-│   └── NotoSansSinhala-Regular.ttf
+
+- main.py
+- live.py
+- requirements.txt
+
+models/
+- best.pt
+- bird_resnet50.pth
+- classes.json
+- sinhala_map.json
+- species_info.json
+
+fonts/
+- NotoSansSinhala-Regular.ttf
+
+---
+
+## Setup
+
+Clone the repo:
+
+git clone https://github.com/yourusername/BirdVision_Local.git
+
+Create environment:
+
+python -m venv venv
+
+Activate:
+
+venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+---
+
+## Run
+
+Image / Video:
+
+python main.py
+
+Live Camera:
+
+python live.py
+
+Press Q to quit.
+
+---
+
+## Notes
+
+- Keep models inside models/
+- Keep font inside fonts/
+- Camera index may vary
