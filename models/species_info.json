@@ -1,0 +1,47 @@
+{
+  "green_parrot": {
+    "english": "Green Parrot",
+    "sinhala": "කොළ ගිරවා",
+    "category": "Resident",
+    "habitat_en": "Woodlands, gardens, agricultural areas",
+    "habitat_si": "වනාන්තර, ගෙවතු සහ වගා භූමි",
+    "diet_en": "Fruits, seeds, grains, buds",
+    "diet_si": "පලතුරු, බීජ, ධාන්‍ය සහ මල් කුඩු"
+  },
+  "white_throated_kingfisher": {
+    "english": "White-throated Kingfisher",
+    "sinhala": "සුදු පිළිහුඩුවා",
+    "category": "Resident",
+    "habitat_en": "Near water bodies, paddy fields",
+    "habitat_si": "ජලාශ අසළ සහ කුඹුරු",
+    "diet_en": "Fish, frogs, insects, reptiles",
+    "diet_si": "මාළු, කුඩා බෙල්ලන් සහ පළිබෝධ"
+  },
+  "house_sparrow": {
+    "english": "House Sparrow",
+    "sinhala": "ගේ කුරුල්ලා",
+    "category": "Resident",
+    "habitat_en": "Urban settlements and villages",
+    "habitat_si": "නගර සහ ගම්මාන",
+    "diet_en": "Grains, seeds, insects",
+    "diet_si": "ධාන්‍ය, බීජ සහ පළිබෝධ"
+  },
+  "black_hooded_oriole": {
+    "english": "Black Hooded Oriole",
+    "sinhala": "කහ කුරුල්ලා",
+    "category": "Resident",
+    "habitat_en": "Forests, gardens, plantations",
+    "habitat_si": "වනාන්තර සහ ගෙවතු",
+    "diet_en": "Fruits, insects, nectar",
+    "diet_si": "පලතුරු, පළිබෝධ සහ මධු"
+  },
+  "cormorant": {
+  "english": "Cormorant",
+  "sinhala": "දියකාවා",
+  "category": "Resident",
+  "habitat_en": "Lakes, rivers, coastal areas and wetlands",
+  "habitat_si": "වැව්, ගංගා, මුහුදු තීර සහ තෙත් භූමි",
+  "diet_en": "Fish, aquatic animals",
+  "diet_si": "මාළු සහ ජල ජීවීන්"
+  }
+}
