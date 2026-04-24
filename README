@@ -38,3 +38,17 @@ Also supports:
 ---
 
 ## 📁 Project Structure
+BirdVision/
+│
+├── main.py # image + video detection
+├── live.py # live camera detection
+│
+├── models/
+│ ├── best.pt
+│ ├── bird_resnet50.pth
+│ ├── classes.json
+│ ├── sinhala_map.json
+│ └── species_info.json
+│
+├── fonts/
+│ └── NotoSansSinhala-Regular.ttf
