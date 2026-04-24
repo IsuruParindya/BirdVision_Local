@@ -1,142 +1,40 @@
 # 🐦 BirdVision
 
-This is a bird detection system I built using AI.
+## 🚀 AI Bird Detection System
+
+This is a bird detection system I built using AI.  
 It can detect and identify birds from **images, videos, and live camera feed**.
 
-Basically:
+---
 
-* YOLO → finds the bird
-* ResNet → tells what bird it is
+### ⚡ Core Idea
 
-And it shows the name in:
+- YOLO → finds the bird  
+- ResNet → tells what bird it is  
 
-* English
-* Sinhala
+Also supports:
+- English labels  
+- Sinhala labels  
 
 ---
 
 ## 🔥 What it can do
 
-* Detect birds from images
-* Process videos frame-by-frame
-* Run real-time detection using webcam
-* Show bird name + confidence
-* Show Sinhala translation
+- Detect birds from images  
+- Process videos frame-by-frame  
+- Run real-time detection using webcam  
+- Show bird name + confidence  
+- Show Sinhala translation  
 
 ---
 
 ## 🧠 How it works (simple)
 
-1. YOLOv8 detects the bird location
-2. That region is cropped
-3. ResNet50 classifies the bird
-4. Output is drawn on screen
+1. YOLOv8 detects the bird  
+2. Crop detected region  
+3. ResNet50 classifies it  
+4. Draw result on screen  
 
 ---
 
 ## 📁 Project Structure
-
-```
-BirdVision/
-│
-├── main.py        # image + video detection
-├── live.py        # live camera detection
-│
-├── models/
-│   ├── best.pt
-│   ├── bird_resnet50.pth
-│   ├── classes.json
-│   ├── sinhala_map.json
-│   └── species_info.json
-│
-├── fonts/
-│   └── NotoSansSinhala-Regular.ttf
-```
-
----
-
-## ⚙️ How to run
-
-### 1. Clone repo
-
-```
-git clone https://github.com/yourusername/BirdVision.git
-cd BirdVision
-```
-
----
-
-### 2. Setup environment
-
-```
-python -m venv venv
-venv\Scripts\activate
-```
-
----
-
-### 3. Install dependencies
-
-```
-pip install ultralytics opencv-python pillow torch torchvision
-```
-
----
-
-### 4. Run it
-
-#### Image / Video
-
-```
-python main.py
-```
-
-#### Live Camera
-
-```
-python live.py
-```
-
-Press **Q** to quit live feed.
-
----
-
-## 🧪 Trained Birds
-
-Currently trained on:
-
-* Green Parrot
-* Black Hooded Oriole
-* House Sparrow
-* White Throated Kingfisher
-* (more can be added)
-
----
-
-## ⚠️ Notes
-
-* Make sure models are inside `models/`
-* Make sure Sinhala font is inside `fonts/`
-* Camera index might change depending on your device
-
----
-
-## 🚀 Future ideas
-
-* Detect multiple birds at once
-* Improve FPS for live feed
-* Build a web app version
-* Expand dataset
-
----
-
-## 💬 Why I built this
-
-Wanted to build something real using computer vision instead of just training models.
-This project helped me understand detection + classification working together.
-
----
-
-## 👨‍💻 Me
-
-Just experimenting, learning, and building stuff.
