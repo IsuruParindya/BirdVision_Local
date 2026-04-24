@@ -16,15 +16,17 @@ yolo_path = os.path.join(base, "best.pt")
 classes = json.load(open(cls, encoding="utf-8"))
 sinhala = json.load(open(si, encoding="utf-8"))
 
-device = torch.device("cpu")
+# 🔥 AUTO DEVICE DETECTION
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("Running on:", device)
 
 # ---- Classifier ----
 clf = models.resnet50(weights=None)
 clf.fc = nn.Linear(clf.fc.in_features, len(classes))
 clf.load_state_dict(torch.load(pth, map_location=device))
-clf.eval()
+clf = clf.to(device).eval()
 
-# ---- YOLO ----
+# ---- YOLO (auto GPU if available) ----
 detector = YOLO(yolo_path)
 
 # ---- Transform ----
@@ -36,7 +38,7 @@ transform = transforms.Compose([
 
 def classify(img):
     img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    x = transform(img).unsqueeze(0)
+    x = transform(img).unsqueeze(0).to(device)  # 🔥 move to device
 
     with torch.no_grad():
         probs = torch.softmax(clf(x), dim=1)
@@ -156,7 +158,7 @@ while True:
         else:
             tracking = False
 
-    cv2.imshow("BirdVision Live (TRACKING FIXED)", frame)
+    cv2.imshow("BirdVision Live (AUTO GPU/CPU)", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
