@@ -1,4 +1,4 @@
-# 🐦 Bird Vision – Bird Species Recognition Dashboard
+# 🐦 Bird Vision – Bird Species Recognition Backend with Python
 
 Bird Vision is an AI-powered system that detects and identifies bird species using YOLO and ResNet.
 
@@ -8,6 +8,7 @@ Bird Vision is an AI-powered system that detects and identifies bird species usi
 - Image & video upload
 - Bird insights
 - Settings management
+
 ## 🧠 How It Works
 
 1. YOLOv8 detects the bird and draws a bounding box
