@@ -16,7 +16,9 @@ yolo_path = os.path.join(base, "best.pt")
 classes = json.load(open(cls, encoding="utf-8"))
 sinhala = json.load(open(si, encoding="utf-8"))
 
-# 🔥 AUTO DEVICE DETECTION
+# =========================
+# 🔥 AUTO DEVICE
+# =========================
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Running on:", device)
 
@@ -26,10 +28,46 @@ clf.fc = nn.Linear(clf.fc.in_features, len(classes))
 clf.load_state_dict(torch.load(pth, map_location=device))
 clf = clf.to(device).eval()
 
-# ---- YOLO (auto GPU if available) ----
+# ---- YOLO ----
 detector = YOLO(yolo_path)
 
-# ---- Transform ----
+# =========================
+# 🔥 SMART CAMERA (FIXED)
+# =========================
+def get_camera():
+    print("🔍 Scanning cameras...")
+
+    working_caps = []
+
+    for i in range(5):
+        cap = cv2.VideoCapture(i, cv2.CAP_DSHOW)
+        if cap.isOpened():
+            ret, frame = cap.read()
+            if ret:
+                print(f"Camera detected at index {i}")
+                working_caps.append((i, cap))
+            else:
+                cap.release()
+        else:
+            cap.release()
+
+    if not working_caps:
+        raise Exception("No camera found ❌")
+
+    # Prefer external cam
+    for idx, cap in working_caps:
+        if idx != 0:
+            print(f"Using external camera (index {idx}) ✅")
+            return cap
+
+    print("Using laptop camera (index 0) ⚠️")
+    return working_caps[0][1]
+
+cap = get_camera()
+
+# =========================
+# TRANSFORM
+# =========================
 transform = transforms.Compose([
     transforms.Resize((224,224)),
     transforms.ToTensor(),
@@ -38,7 +76,7 @@ transform = transforms.Compose([
 
 def classify(img):
     img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    x = transform(img).unsqueeze(0).to(device)  # 🔥 move to device
+    x = transform(img).unsqueeze(0).to(device)
 
     with torch.no_grad():
         probs = torch.softmax(clf(x), dim=1)
@@ -46,7 +84,7 @@ def classify(img):
 
     return classes[int(pred)], float(conf)
 
-# ---- SAFE TRACKER ----
+# ---- Tracker ----
 def create_tracker():
     if hasattr(cv2, "TrackerCSRT_create"):
         return cv2.TrackerCSRT_create()
@@ -55,15 +93,9 @@ def create_tracker():
     else:
         raise Exception("Install opencv-contrib-python")
 
-# ---- Camera ----
-cap = cv2.VideoCapture(0)
-
-if not cap.isOpened():
-    raise Exception("Camera not found ❌")
-
 # ---- Fonts ----
 en_font = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 16)
-si_font = ImageFont.truetype("fonts/NotoSansSinhala-Regular.ttf", 16)
+si_font = ImageFont.truetype("C:/Windows/Fonts/Nirmala.ttf", 16)
 
 # ---- Tracking ----
 tracker = None
@@ -71,7 +103,7 @@ tracking = False
 
 # ---- Timing ----
 last_detect_time = 0
-DETECT_INTERVAL = 2.0
+DETECT_INTERVAL = 1.5  # faster response
 
 last_label = ""
 last_si = ""
@@ -79,7 +111,9 @@ last_conf = 0
 
 print("Press Q to quit")
 
-# ---- Loop ----
+# =========================
+# LOOP
+# =========================
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -88,12 +122,12 @@ while True:
     frame = cv2.flip(frame, 1)
 
     h, w = frame.shape[:2]
-    scale = 480 / w
-    frame = cv2.resize(frame, (480, int(h * scale)))
+    scale = 640 / w
+    frame = cv2.resize(frame, (640, int(h * scale)))
 
     current_time = time.time()
 
-    # ---- YOLO DETECTION ----
+    # ---- DETECTION ----
     if current_time - last_detect_time > DETECT_INTERVAL:
 
         results = detector(frame, conf=0.3, imgsz=320, verbose=False)[0]
@@ -126,7 +160,7 @@ while True:
             x, y, w, h = map(int, box)
             x1, y1, x2, y2 = x, y, x+w, y+h
 
-            label_en = f"{last_label} ({last_conf*100:.0f}%)"
+            label = f"{last_label} ({last_conf*100:.0f}%)"
 
             cv2.rectangle(frame, (x1,y1), (x2,y2), (0,255,0), 2)
 
@@ -136,29 +170,18 @@ while True:
 
             padding = 6
 
-            en_box = draw.textbbox((0,0), label_en, font=en_font)
-            si_box = draw.textbbox((0,0), last_si, font=si_font)
+            draw.text((x1 + padding, y1 - 30),
+                      label, font=en_font, fill=(255,255,255))
 
-            text_width = max(en_box[2], si_box[2]) + padding*2
-            text_height = (en_box[3] + si_box[3]) + padding*3
-
-            y_top = y1 - text_height if y1 - text_height > 0 else y1 + 5
-
-            draw.rectangle([x1, y_top, x1 + text_width, y_top + text_height],
-                           fill=(173,216,230))
-
-            draw.text((x1 + padding, y_top + padding),
-                      label_en, font=en_font, fill=(0,0,0))
-
-            draw.text((x1 + padding, y_top + en_box[3] + padding),
-                      last_si, font=si_font, fill=(0,0,0))
+            draw.text((x1 + padding, y1 - 10),
+                      last_si, font=si_font, fill=(255,255,255))
 
             frame = cv2.cvtColor(np.array(pil), cv2.COLOR_RGB2BGR)
 
         else:
             tracking = False
 
-    cv2.imshow("BirdVision Live (AUTO GPU/CPU)", frame)
+    cv2.imshow("BirdVision Live (FINAL)", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
